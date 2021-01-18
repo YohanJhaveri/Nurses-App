@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/react";
 import { Message } from "components";
 
-function TasksEmpty({ isToday }) {
+function Empty({ isToday }) {
   return (
     <Flex borderWidth="1px" p="40px 30px" my="10px" rounded="md" bg="#f8f9fa">
       <Message
@@ -17,4 +17,4 @@ function TasksEmpty({ isToday }) {
   );
 }
 
-export default TasksEmpty;
+export default Empty;

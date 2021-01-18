@@ -17,6 +17,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 
+import Error from "./Error";
 import Dashboard from "./Dashboard/Dashboard";
 import Timeseries from "./Timeseries/Timeseries";
 import Datatable from "./Datatable/Datatable";
@@ -61,7 +62,7 @@ function Review() {
   const filteredTasks = tasks ? filterTasks() : [];
 
   if (loading) return <Loading />;
-  // if (error) return <Error />;
+  if (error) return <Error />;
 
   return (
     <Box p="50px" w="100vw">
