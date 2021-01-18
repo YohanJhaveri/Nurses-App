@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Flex, Heading, Button, Image } from "@chakra-ui/react";
-import Nurse from "images/nurse (2).svg";
+import Nurse from "images/nurse.svg";
 
 function Header() {
   return (
