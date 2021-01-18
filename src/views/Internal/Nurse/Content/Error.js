@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/react";
 import { Message } from "components";
 
-function TasksEmpty() {
+function TasksError() {
   return (
     <Flex borderWidth="1px" p="40px 30px" m="20px 0" rounded="md" bg="#f8f9fa">
       <Message
@@ -14,4 +14,4 @@ function TasksEmpty() {
   );
 }
 
-export default TasksEmpty;
+export default TasksError;

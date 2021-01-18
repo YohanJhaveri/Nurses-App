@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Box, Text, Tooltip } from "@chakra-ui/react";
 
-function TimeChart({ times }) {
+function Timechart({ times }) {
   const getHourCounts = () => {
     const counts = [];
 
@@ -29,37 +29,38 @@ function TimeChart({ times }) {
     return `${hours12}${meridian}`;
   };
 
-  const counts = [0, 3, 5, 3, 8, 9, 3, 2, 4, 6, 8, 0, 6, 3, 2, 5, 8, 9, 2, 3, 7, 2, 5, 5];
+  const counts = getHourCounts();
   const max = Math.max(...counts);
 
   return (
-    <Flex py="40px" align="flex-end" gridGap="10px">
+    <Flex align="flex-end" gridGap="10px">
       {counts.map((count, index) => (
-        <Tooltip label={`${count} tasks`} placement="bottom">
-          <Flex
-            direction="column"
-            justify="flex-end"
-            align="center"
-            h="400px"
-            w="calc(100% / 24)"
-            gridGap="10px"
-          >
+        <Flex
+          key={index}
+          direction="column"
+          justify="flex-end"
+          align="center"
+          w="calc(100% / 24)"
+          h="340px"
+          gridGap="10px"
+        >
+          <Tooltip label={`${count} task${count !== 1 ? "s" : ""}`} placement="top" h="100%">
             <Box
-              bg="blue.300"
+              bg="blue.500"
               rounded="md"
               w="100%"
               h={`${Math.round((count * 100) / max)}%`}
               borderWidth="1px"
-              borderColor="blue.400"
+              borderColor="blue.600"
             />
-            <Text fontSize="0.75rem" fontWeight="500">
-              {formatLabel(index)}
-            </Text>
-          </Flex>
-        </Tooltip>
+          </Tooltip>
+          <Text fontSize="0.65rem" fontWeight="600">
+            {formatLabel(index)}
+          </Text>
+        </Flex>
       ))}
     </Flex>
   );
 }
 
-export default TimeChart;
+export default Timechart;

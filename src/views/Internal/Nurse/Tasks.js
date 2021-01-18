@@ -5,7 +5,7 @@ import { Flex, useDisclosure } from "@chakra-ui/react";
 
 import Calendar from "./Calendar/Calendar";
 import Form from "./Form/Form";
-import List from "./List/List";
+import Content from "./Content/Content";
 
 function Tasks() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,7 +24,7 @@ function Tasks() {
   return (
     <Flex p="50px" gridGap="50px" align="flex-start">
       <Calendar today={today} date={date} setDate={setDate} />
-      <List date={date} isToday={isToday} onOpen={onOpen} setSelected={setSelected} />
+      <Content date={date} isToday={isToday} onOpen={onOpen} setSelected={setSelected} />
       <Form selected={selected} setSelected={setSelected} isOpen={isOpen} onClose={onClose} />
     </Flex>
   );

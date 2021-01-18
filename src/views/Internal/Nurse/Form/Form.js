@@ -6,6 +6,7 @@ import { firestore } from "database/firebase";
 import { Grid } from "@chakra-ui/react";
 import { Input, Textarea, Select, Sidebar } from "components";
 
+import { helper } from "functions";
 import { addTask, updateTask } from "database/tasks";
 
 function Form({ selected, setSelected, isOpen, onClose }) {
@@ -19,19 +20,13 @@ function Form({ selected, setSelected, isOpen, onClose }) {
   const [loading, setLoading] = useState(false);
   const [departments] = useCollection(firestore.collection("departments"));
 
-  useEffect(() => {
-    if (selected) {
-      const { time, department, description, custom } = selected;
-      setInputs({ time, department, description, custom });
-    }
-  }, [selected]);
+  const selectedDepartment = helper.getSelectedDepartment(departments, inputs.department);
+  const departmentOptions = helper.getDepartmentOptions(departments);
+  const descriptionOptions = helper.getDescriptionOptions(selectedDepartment);
 
-  const departmentOptions = departments ? departments.map((d) => d.name) : [];
-  const selectedDepartment = departments && departments.find((d) => d.name === inputs.department);
-  const descriptionOptions = (selectedDepartment && selectedDepartment.tasks
-    ? selectedDepartment.tasks
-    : []
-  ).concat(["Custom"]);
+  useEffect(() => {
+    if (selected) setInputs({ ...selected });
+  }, [selected]);
 
   const handleChange = (name, value) => {
     setInputs((prev) => ({
@@ -77,17 +72,15 @@ function Form({ selected, setSelected, isOpen, onClose }) {
       facilityID: selectedDepartment.facilityID,
     };
 
-    if (selected) {
-      updateTask(data)
-        .then(handleCancel)
-        .catch(alert)
-        .finally(() => setLoading(false));
-    } else {
-      addTask(data)
-        .then(handleCancel)
-        .catch(alert)
-        .finally(() => setLoading(false));
-    }
+    const taskFunctions = {
+      add: () => addTask(data),
+      update: () => updateTask(selected.id, data),
+    };
+
+    taskFunctions[selected ? "update" : "add"]()
+      .then(handleCancel)
+      .catch(alert)
+      .finally(() => setLoading(false));
   };
 
   return (

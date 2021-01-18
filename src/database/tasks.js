@@ -8,8 +8,8 @@ const addTask = async (data) => {
   return await firestore.collection("tasks").add(data);
 };
 
-const updateTask = async (data) => {
-  return await firestore.collection("tasks").doc(data.id).update(data);
+const updateTask = async (id, data) => {
+  return await firestore.collection("tasks").doc(id).update(data);
 };
 
 export { addTask, updateTask };

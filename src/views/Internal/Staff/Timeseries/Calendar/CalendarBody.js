@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import styled from "styled-components";
 import { format } from "functions";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Tooltip } from "@chakra-ui/react";
 
 function CalendarBody({ month, year, counts }) {
   const getColors = (value) => {
@@ -35,17 +35,23 @@ function CalendarBody({ month, year, counts }) {
 
         days.push(
           <TableBodyCell key={i} today={false}>
-            <Day justify="center" align="center">
-              <Selected
-                justify="center"
-                align="center"
-                color={color}
-                bg={background}
-                rounded="full"
-              >
-                {isValid ? currentDay : ""}
-              </Selected>
-            </Day>
+            <Tooltip
+              label={isValid && `${counts[currentDate] || 0} task${count !== 1 ? "s" : ""}`}
+              placement="bottom"
+              h="100%"
+            >
+              <Day cursor={isValid && "pointer"} justify="center" align="center">
+                <Selected
+                  justify="center"
+                  align="center"
+                  color={color}
+                  bg={background}
+                  rounded="full"
+                >
+                  {isValid ? currentDay : ""}
+                </Selected>
+              </Day>
+            </Tooltip>
           </TableBodyCell>
         );
 
@@ -92,7 +98,6 @@ const TableBodyCell = styled.td`
   height: calc(300px / 7);
   text-align: center;
   font-size: 0.85rem;
-  cursor: pointer;
 `;
 
 const Day = styled(Flex)`

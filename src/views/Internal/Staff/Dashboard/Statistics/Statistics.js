@@ -1,30 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Flex } from "@chakra-ui/react";
-import Tab from "./Tab";
-import Overall from "./Overall";
-import TimeChart from "./TimeChart";
+import { Grid } from "@chakra-ui/react";
+import StatBlock from "./StatBlock";
 
 function Statistics({ tasks, departments, nurses }) {
-  const [tab, setTab] = useState("Overall");
-  const tabs = ["Overall", "Time", "Popularity"];
+  const getDateCounts = (dates) => {
+    const counts = {};
 
-  const render = {
-    Overall: <Overall tasks={tasks} nurses={nurses} departments={departments} />,
-    Time: <TimeChart times={tasks.map((t) => t.time)} />,
+    for (const date of dates) {
+      if (counts[date]) {
+        counts[date] += 1;
+      } else {
+        counts[date] = 1;
+      }
+    }
+
+    return counts;
   };
 
+  const counts = getDateCounts(tasks ? tasks.map((t) => t.date) : []);
+  const keys = Object.keys(counts);
+  const vals = Object.values(counts);
+  const total = vals.reduce((a, b) => a + b, 0);
+
   return (
-    <div>
-      <Flex gridGap="8px">
-        {tabs.map((t) => (
-          <Tab selected={t === tab} handleClick={() => setTab(t)}>
-            {t}
-          </Tab>
-        ))}
-      </Flex>
-      {render[tab]}
-    </div>
+    <Grid gap="15px" templateColumns="1fr 1fr">
+      <StatBlock label="Total Nurses" value={nurses.length} />
+      <StatBlock label="Total Departments" value={departments.length} />
+      <StatBlock label="Total Tasks" value={tasks.length} />
+      <StatBlock label="Daily Average" value={(total / keys.length).toFixed(2)} />
+    </Grid>
   );
 }
 
