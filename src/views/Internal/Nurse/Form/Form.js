@@ -20,7 +20,7 @@ function Form({ selected, setSelected, isOpen, onClose }) {
   const [loading, setLoading] = useState(false);
   const [departments] = useCollection(firestore.collection("departments"));
 
-  const selectedDepartment = helper.getSelectedDepartment(departments, inputs.department);
+  const selectedDepartment = helper.findDepartment(departments, inputs.department);
   const departmentOptions = helper.getDepartmentOptions(departments);
   const descriptionOptions = helper.getDescriptionOptions(selectedDepartment);
 
