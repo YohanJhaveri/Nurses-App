@@ -32,8 +32,6 @@ function useReview() {
 
       const { facilityID } = user;
 
-      console.log(facilityID);
-
       const [facility, nurses, departments, tasks] = await Promise.all([
         getDocument(firestore.collection("facilities").doc(facilityID)),
         getCollection(firestore.collection("users").where("facilityID", "==", facilityID)),

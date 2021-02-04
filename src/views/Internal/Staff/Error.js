@@ -4,11 +4,11 @@ import { Message } from "components";
 
 function Error() {
   return (
-    <Flex h="100vh" w="100vw" bg="#f8f9fa">
+    <Flex h="calc(100vh - 75px)" w="100vw">
       <Message
         type="failure"
-        title="Connection Error"
-        description="We were unable to load the facility review."
+        title="Authorization Error"
+        description="You do not have valid authorization to access the facility review. If you think this is incorrect, please contact the database administrator for access."
       />
     </Flex>
   );

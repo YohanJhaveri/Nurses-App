@@ -28,7 +28,7 @@ function Statistics({ tasks, departments, nurses }) {
       <StatBlock label="Total Nurses" value={nurses.length} />
       <StatBlock label="Total Departments" value={departments.length} />
       <StatBlock label="Total Tasks" value={tasks.length} />
-      <StatBlock label="Daily Average" value={(total / keys.length).toFixed(2)} />
+      <StatBlock label="Daily Average" value={keys.length ? (total / keys.length).toFixed(2) : 0} />
     </Grid>
   );
 }

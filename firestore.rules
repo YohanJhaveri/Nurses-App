@@ -1,8 +1,44 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+  	match /users/{userID} {
+      allow write: if userID == request.auth.uid && request.resource.isSupervisor == resource.isSupervisor;
+      allow read: if request.auth.uid == userID || getUserData(request.auth.uid).isSupervisor;
+    }
+  
+    match /tasks/{taskID} {
+      allow create: 
+      	if request.resource.data.nurseID == request.auth.uid 
+      	&& request.time.day() == int(request.resource.data.date.split("-")[2])
+        && request.time.month() == int(request.resource.data.date.split("-")[1])
+        && request.time.year() == int(request.resource.data.date.split("-")[0]);
+      
+      allow update: 
+      	if resource.data.nurseID == request.auth.uid 
+      	&& request.time.day() == int(resource.data.date.split("-")[2])
+        && request.time.month() == int(resource.data.date.split("-")[1])
+        && request.time.year() == int(resource.data.date.split("-")[0]);
+        
+      allow read: if resource.data.nurseID == request.auth.uid || getUserData(request.auth.uid).isSupervisor;
+    }
+    
+    function getUserData(id) {
+    	return get(/databases/$(database)/documents/users/$(id)).data
+    }
+    
+    match /departments/{departmentID} {
+      allow write: if false;
+      allow read: if true;
+    }
+    
+    match /facilities/{facilityID} {
+      allow write: if false;
+      allow read: if getUserData(request.auth.uid).isSupervisor;
+    }
+    
+    match /regions/{regionID} {
+      allow write: if false;
+      allow read: if getUserData(request.auth.uid).isSupervisor;
     }
   }
 }

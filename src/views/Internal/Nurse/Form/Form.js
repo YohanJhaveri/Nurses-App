@@ -32,6 +32,7 @@ function Form({ selected, setSelected, isOpen, onClose }) {
     setInputs((prev) => ({
       ...prev,
       description: name === "department" ? "" : prev.description,
+      custom: name === "department" || name === "description" ? "" : prev.custom,
       [name]: value,
     }));
     setErrors((prev) => ({ ...prev, [name]: !value }));

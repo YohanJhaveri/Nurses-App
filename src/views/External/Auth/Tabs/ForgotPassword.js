@@ -14,7 +14,7 @@ function ForgotPassword({ setTab }) {
 
   if (success) {
     return (
-      <Box p="40px 30px">
+      <Box p="40px 60px">
         <Message
           type="success"
           title="Email Sent!"

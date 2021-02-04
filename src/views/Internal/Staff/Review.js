@@ -36,7 +36,7 @@ function Review() {
 
   const filterTasks = () => {
     const selectedDepartment = helper.findDepartment(departments, inputs.department);
-    const selectedNurse = helper.findNurse(departments, inputs.nurse);
+    const selectedNurse = helper.findNurse(nurses, inputs.nurse);
 
     const filtered = tasks
       .filter((t) => (selectedDepartment ? t.departmentID === selectedDepartment.id : true))
